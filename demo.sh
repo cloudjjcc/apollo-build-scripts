@@ -1,14 +1,16 @@
 #!/bin/bash
 
 # apollo config db info
-apollo_config_db_url="jdbc:mysql://$apollo_db_url/ApolloConfigDB?characterEncoding=utf8&serverTimezone=Asia/Shanghai"
+apollo_config_db_url="jdbc:mysql://$APOLLO_DB_URL/ApolloConfigDB?characterEncoding=utf8&serverTimezone=Asia/Shanghai"
 # apollo_config_db_username=$
 # apollo_config_db_password=
 
 # apollo portal db info
-apollo_portal_db_url="jdbc:mysql://$apollo_db_url/ApolloPortalDB?characterEncoding=utf8&serverTimezone=Asia/Shanghai"
+apollo_portal_db_url="jdbc:mysql://$APOLLO_DB_URL/ApolloPortalDB?characterEncoding=utf8&serverTimezone=Asia/Shanghai"
 # apollo_port_db_username=root
 # apollo_portal_db_password=
+
+echo "db url is:$APOLLO_DB_URL"
 
 # =============== Please do not modify the following content =============== #
 
@@ -104,7 +106,7 @@ if [ "$1" = "start" ] ; then
   echo "==== starting service ===="
   echo "Service logging file is $SERVICE_LOG"
   export APP_NAME="apollo-service"
-  export JAVA_OPTS="$SERVER_JAVA_OPTS -Dlogging.file.name=./apollo-service.log -Dspring.datasource.url=$apollo_config_db_url -Dspring.datasource.username=$apollo_db_username -Dspring.datasource.password=$apollo_db_password"
+  export JAVA_OPTS="$SERVER_JAVA_OPTS -Dlogging.file.name=./apollo-service.log -Dspring.datasource.url=$apollo_config_db_url -Dspring.datasource.username=$APOLLO_DB_USERNAME -Dspring.datasource.password=$APOLLO_DB_PASSWORD"
 
   if [[ -f $SERVICE_JAR ]]; then
     rm -rf $SERVICE_JAR
@@ -149,7 +151,7 @@ if [ "$1" = "start" ] ; then
   echo "==== starting portal ===="
   echo "Portal logging file is $PORTAL_LOG"
   export APP_NAME="apollo-portal"
-  export JAVA_OPTS="$PORTAL_JAVA_OPTS -Dlogging.file.name=./apollo-portal.log -Dserver.port=8070 -Dspring.datasource.url=$apollo_portal_db_url -Dspring.datasource.username=$apollo_db_username -Dspring.datasource.password=$apollo_db_password"
+  export JAVA_OPTS="$PORTAL_JAVA_OPTS -Dlogging.file.name=./apollo-portal.log -Dserver.port=8070 -Dspring.datasource.url=$apollo_portal_db_url -Dspring.datasource.username=$APOLLO_DB_USERNAME -Dspring.datasource.password=$APOLLO_DB_PASSWORD"
 
   if [[ -f $PORTAL_JAR ]]; then
     rm -rf $PORTAL_JAR
